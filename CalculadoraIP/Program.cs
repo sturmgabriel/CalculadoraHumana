@@ -50,21 +50,21 @@ namespace CalculadoraIP
                 PrimeiraOpcao = Console.ReadLine();
                 string[] opList1 = PrimeiraOpcao.Split('/');
                 op1 = Convert.ToInt32(opList1[0]);
-                v1 =   opList1[1];
                 if (op1 == 0)
                 {
                     break;
                 }
+                v1 =   opList1[1];
 
                 Console.WriteLine("\nInsira a segunda Opção/Valor:");
                 SegundaOpcao = Console.ReadLine();
                 string[] opList2 = SegundaOpcao.Split('/');
                 op2 = Convert.ToInt32(opList2[0]);
-                v2 = opList2[1];
                 if (op2 == 0)
                 {
                     break;
                 }
+                v2 = opList2[1];
 
                 distribuiCalculo(op1, op2, v1, v2);
 
@@ -227,10 +227,10 @@ namespace CalculadoraIP
                         {
                             if (valor == MascaraCIDR[i,0])
                             {
-                                Result[4] = MascaraCIDR[i,2];
-                                Result[5] = valor;
-                                Result[6] = MascaraCIDR[i,1];
-                                Result[7] = MascaraCIDR[i,3];
+                                Result[4] = "Quantidade de hosts: "+MascaraCIDR[i,2];
+                                Result[5] = "Máscara de rede: "+ valor;
+                                Result[6] = "CIDR: /"+MascaraCIDR[i,1];
+                                Result[7] = "Quantidade de IPs"+MascaraCIDR[i,3];
                                 erro = null;
                             }
                         }
@@ -265,13 +265,14 @@ namespace CalculadoraIP
 
                 if (erro == null)
                 {
-                    Result[0] = valor;
+                    Result[0] = "IP de rede: "+valor;
 
                     camposValor[3] = Convert.ToString(Convert.ToInt32(camposValor[3]) + 1);
 
                     string hostInicial = camposValor[0] + "." + camposValor[1] + "." + camposValor[2] + "." + camposValor[3];
 
-                    Result[1] = hostInicial;
+                    Result[1] = "Host Inicial: "+hostInicial;
+                    
                 }              
 
             }
