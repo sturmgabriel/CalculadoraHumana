@@ -8,6 +8,29 @@ namespace CalculadoraIP
 {
     public class Program
     {
+        static string[,] MascaraCIDR = new string[,] { { "255.0.0.0", "8", "16777216", "16777214" },
+                                                    { "255.128.0.0", "9", "8388608", "8388606" },
+                                                    { "255.192.0.0", "10", "4194304", "4194302" },
+                                                    { "255.224.0.0", "11", "2097152", "2097150" },
+                                                    { "255.240.0.0", "12", "1048576", "1048574" },
+                                                    { "255.248.0.0", "13", "524288", "524286" },
+                                                    { "255.252.0.0", "14", "262144", "262142" },
+                                                    { "255.254.0.0", "15", "131072", "131070" },
+                                                    { "255.255.0.0", "16", "65536", "65534" },
+                                                    { "255.255.128.0", "17", "32768", "32766" },
+                                                    { "255.255.192.0", "18", "16384", "16382" },
+                                                    { "255.255.224.0", "19", "8192", "8190" },
+                                                    { "255.255.240.0", "20", "4096", "4094" },
+                                                    { "255.255.248.0", "21", "2048", "2046" },
+                                                    { "255.255.252.0", "22", "1024" , "1022" },
+                                                    { "255.255.254.0", "23", "512", "510" },
+                                                    { "255.255.255.0", "24", "256", "254" },
+                                                    { "255.255.255.128", "25", "128", "126" },
+                                                    { "255.255.255.192", "26", "64", "62" },
+                                                    { "255.255.255.224", "27", "32", "30" },
+                                                    { "255.255.255.240", "28", "16", "14" },
+                                                    { "255.255.255.248", "29", "8", "6" },
+                                                    { "255.255.255.252", "30", "4", "2" }};
         static string erro = null;
         static string[] Result = new string[9];
         //Result[0] = ip de rede
@@ -23,7 +46,7 @@ namespace CalculadoraIP
 
         public static void Main(string[] args)
         {
-            
+
             string PrimeiraOpcao;
             string SegundaOpcao;
             string v1;
@@ -50,7 +73,7 @@ namespace CalculadoraIP
                 PrimeiraOpcao = Console.ReadLine();
                 string[] opList1 = PrimeiraOpcao.Split('/');
                 op1 = Convert.ToInt32(opList1[0]);
-                v1 =   opList1[1];
+                v1 = opList1[1];
                 if (op1 == 0)
                 {
                     break;
@@ -77,10 +100,10 @@ namespace CalculadoraIP
                 }
                 else
                 {
-                    Console.WriteLine("\n"+ erro);
+                    Console.WriteLine("\n" + erro);
                 }
             }
-            
+
         }
 
         private static void distribuiCalculo(int op1, int op2, string v1, string v2)
@@ -130,9 +153,20 @@ namespace CalculadoraIP
                 {
                     calculaCIDR(v1);
                 }
-                else if (op2 == 6)
+                else if (op2 == 7)
                 {
                     calculaCIDR(v2);
+                }
+            }
+            if ((op1 == 8 || op2 == 8) && String.IsNullOrEmpty(erro))
+            {
+                if (op1 == 8)
+                {
+                    calculaQntdIps(v1);
+                }
+                else if (op2 == 8)
+                {
+                    calculaQntdIps(v2);
                 }
             }
             //else if (op1 = &op2 = )
@@ -163,30 +197,6 @@ namespace CalculadoraIP
         private static void calculaMascara(string valor)
         {
             string[] camposValor = valor.Split('.');
-
-            string[,] MascaraCIDR = new string[,] { { "255.0.0.0", "/8", "16777216", "16777214" },
-                                                    { "255.128.0.0", "/9", "8388608", "8388606" },
-                                                    { "255.192.0.0", "/10", "4194304", "4194302" },
-                                                    { "255.224.0.0", "/11", "2097152", "2097150" },
-                                                    { "255.240.0.0", "/12", "1048576", "1048574" },
-                                                    { "255.248.0.0", "/13", "524288", "524286" },
-                                                    { "255.252.0.0", "/14", "262144", "262142" },
-                                                    { "255.254.0.0", "/15", "131072", "131070" },
-                                                    { "255.255.0.0", "/16", "65536", "65534" },
-                                                    { "255.255.128.0", "/17", "32768", "32766" },
-                                                    { "255.255.192.0", "/18", "16384", "16382" },
-                                                    { "255.255.224.0", "/19", "8192", "8190" },
-                                                    { "255.255.240.0", "/20", "4096", "4094" },
-                                                    { "255.255.248.0", "/21", "2048", "2046" },
-                                                    { "255.255.252.0", "/22", "1024" , "1022" },
-                                                    { "255.255.254.0", "/23", "512", "510" },
-                                                    { "255.255.255.0", "/24", "256", "254" },
-                                                    { "255.255.255.128", "/25", "128", "126" },
-                                                    { "255.255.255.192", "/26", "64", "62" },
-                                                    { "255.255.255.224", "/27", "32", "30" },
-                                                    { "255.255.255.240", "/28", "16", "14" },
-                                                    { "255.255.255.248", "/29", "8", "6" },
-                                                    { "255.255.255.252", "/30", "4", "2" }};
 
             int contador = camposValor.Count();
 
@@ -225,12 +235,12 @@ namespace CalculadoraIP
                     {
                         for (int u = 0; u <= 3; u++)
                         {
-                            if (valor == MascaraCIDR[i,0])
+                            if (valor == MascaraCIDR[i, 0])
                             {
-                                Result[4] = MascaraCIDR[i,2];
+                                Result[4] = MascaraCIDR[i, 3];
                                 Result[5] = valor;
-                                Result[6] = MascaraCIDR[i,1];
-                                Result[7] = MascaraCIDR[i,3];
+                                Result[6] = MascaraCIDR[i, 1];
+                                Result[7] = MascaraCIDR[i, 2];
                                 erro = null;
                             }
                         }
@@ -240,15 +250,73 @@ namespace CalculadoraIP
         }
         private static void calculaCIDR(string valor)
         {
+
+            if (Convert.ToInt32(valor) >= 8 && Convert.ToInt32(valor) <= 30)
+            {
+                if (erro == null)
+                {
+                    erro = "CIDR INVALIDO!";
+                    for (int i = 0; i <= 22; i++)
+                    {
+                        for (int u = 0; u <= 3; u++)
+                        {
+                            if (valor == MascaraCIDR[i, 1])
+                            {
+                                Result[4] = MascaraCIDR[i, 3];
+                                Result[5] = MascaraCIDR[i, 0];
+                                Result[6] = valor;
+                                Result[7] = MascaraCIDR[i, 2];
+                                erro = null;
+                            }
+                        }
+                    }
+                }
+                Console.WriteLine(Result[4]);
+                Console.WriteLine(Result[5]);
+                Console.WriteLine(Result[6]);
+                Console.WriteLine(Result[7]);
+            }
+            else
+            {
+                erro = "CIDR INVALIDO!";
+            }
+
         }
 
-            public static void calculaIpDeRede(string valor)
+        public static void calculaQntdIps(string valor)
+        {
+            if (erro == null)
+            {
+                erro = "QUANTIDADE DE IPS INVALIDO!";
+                for (int i = 0; i <= 22; i++)
+                {
+                    for (int u = 0; u <= 3; u++)
+                    {
+                        if (valor == MascaraCIDR[i, 2])
+                        {
+                            Result[4] = MascaraCIDR[i, 3];
+                            Result[5] = MascaraCIDR[i, 0];
+                            Result[6] = MascaraCIDR[i, 1];
+                            Result[7] = valor;
+                            erro = null;
+                        }
+                    }
+                }
+                Console.WriteLine(Result[4]);
+                Console.WriteLine(Result[5]);
+                Console.WriteLine(Result[6]);
+                Console.WriteLine(Result[7]);
+            }
+        }
+
+        public static void calculaIpDeRede(string valor)
         {
             string[] camposValor = valor.Split('.');
 
             int contador = camposValor.Count();
-            
-            if (contador != 4) {
+
+            if (contador != 4)
+            {
                 erro = "IP DE REDE INVALIDO!";
             }
 
@@ -272,11 +340,11 @@ namespace CalculadoraIP
                     string hostInicial = camposValor[0] + "." + camposValor[1] + "." + camposValor[2] + "." + camposValor[3];
 
                     Result[1] = hostInicial;
-                }              
+                }
 
             }
-            
-            
+
+
         }
     }
 }
