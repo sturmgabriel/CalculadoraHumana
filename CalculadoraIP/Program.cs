@@ -137,29 +137,7 @@ namespace CalculadoraIP
                     calculaCIDR(v2);
                 }
             }
-            //else if (op1 = &op2 = )
-            //{
-
-
-            //}
-            //else if (op1 = &op2 = )
-            //{
-
-
-            //}
-            //else if (op1 = &op2 = )
-            //{
-
-
-            //}
-            //else if (op1 = &op2 = )
-            //{
-
-
-            //}
-            //else {
-            //    Console.WriteLine("OPÇÃO INVALIDA!");
-            //}
+            
         }
 
         private static void calculaMascara(string valor)
@@ -246,7 +224,7 @@ namespace CalculadoraIP
         {
         }
 
-            public static void calculaIpDeRede(string valor)
+        public static void calculaIpDeRede(string valor)
         {
             string[] camposValor = valor.Split('.');
 
