@@ -8,29 +8,29 @@ namespace CalculadoraIP
 {
     public class Program
     {
-        static string[,] MascaraCIDR = new string[,] { { "255.0.0.0", "/8", "16777216", "16777214","1" },
-                                                    { "255.128.0.0", "/9", "8388608", "8388606","2" },
-                                                    { "255.192.0.0", "/10", "4194304", "4194302" ,"4"},
-                                                    { "255.224.0.0", "/11", "2097152", "2097150" ,"8"},
-                                                    { "255.240.0.0", "/12", "1048576", "1048574" ,"16"},
-                                                    { "255.248.0.0", "/13", "524288", "524286" ,"32"},
-                                                    { "255.252.0.0", "/14", "262144", "262142" ,"64"},
-                                                    { "255.254.0.0", "/15", "131072", "131070" ,"128"},
-                                                    { "255.255.0.0", "/16", "65536", "65534" ,"1"},
-                                                    { "255.255.128.0", "/17", "32768", "32766" ,"2"},
-                                                    { "255.255.192.0", "/18", "16384", "16382" ,"4"},
-                                                    { "255.255.224.0", "/19", "8192", "8190" ,"8"},
-                                                    { "255.255.240.0", "/20", "4096", "4094" ,"16"},
-                                                    { "255.255.248.0", "/21", "2048", "2046" ,"32"},
-                                                    { "255.255.252.0", "/22", "1024" , "1022" ,"64"},
-                                                    { "255.255.254.0", "/23", "512", "510","128" },
-                                                    { "255.255.255.0", "/24", "256", "254" ,"1"},
-                                                    { "255.255.255.128", "/25", "128", "126" ,"2"},
-                                                    { "255.255.255.192", "/26", "64", "62" ,"4"},
-                                                    { "255.255.255.224", "/27", "32", "30","8" },
-                                                    { "255.255.255.240", "/28", "16", "14" ,"16"},
-                                                    { "255.255.255.248", "/29", "8", "6" ,"32"},
-                                                    { "255.255.255.252", "/30", "4", "2" ,"64"}};
+        static string[,] MascaraCIDR = new string[,] { { "255.0.0.0", "8", "16777216", "16777214","1" },
+                                                    { "255.128.0.0", "9", "8388608", "8388606","2" },
+                                                    { "255.192.0.0", "10", "4194304", "4194302" ,"4"},
+                                                    { "255.224.0.0", "11", "2097152", "2097150" ,"8"},
+                                                    { "255.240.0.0", "12", "1048576", "1048574" ,"16"},
+                                                    { "255.248.0.0", "13", "524288", "524286" ,"32"},
+                                                    { "255.252.0.0", "14", "262144", "262142" ,"64"},
+                                                    { "255.254.0.0", "15", "131072", "131070" ,"128"},
+                                                    { "255.255.0.0", "16", "65536", "65534" ,"1"},
+                                                    { "255.255.128.0", "17", "32768", "32766" ,"2"},
+                                                    { "255.255.192.0", "18", "16384", "16382" ,"4"},
+                                                    { "255.255.224.0", "19", "8192", "8190" ,"8"},
+                                                    { "255.255.240.0", "20", "4096", "4094" ,"16"},
+                                                    { "255.255.248.0", "21", "2048", "2046" ,"32"},
+                                                    { "255.255.252.0", "22", "1024" , "1022" ,"64"},
+                                                    { "255.255.254.0", "23", "512", "510","128" },
+                                                    { "255.255.255.0", "24", "256", "254" ,"1"},
+                                                    { "255.255.255.128", "25", "128", "126" ,"2"},
+                                                    { "255.255.255.192", "26", "64", "62" ,"4"},
+                                                    { "255.255.255.224", "27", "32", "30","8" },
+                                                    { "255.255.255.240", "28", "16", "14" ,"16"},
+                                                    { "255.255.255.248", "29", "8", "6" ,"32"},
+                                                    { "255.255.255.252", "30", "4", "2" ,"64"}};
 
         static string erro = null;
         static string[] Result = new string[9];
@@ -170,6 +170,18 @@ namespace CalculadoraIP
                     calculaQntdIps(v2);
                 }
             }
+
+            if ((op1 == 5 || op2 == 5) && String.IsNullOrEmpty(erro))
+            {
+                if (op1 == 5)
+                {
+                    calculaQuantidadeHosts(v1);
+                }
+                if (op2 == 5)
+                {
+                    calculaQuantidadeHosts(v2);
+                }
+            }
         }
 
         private static void calculaMascara(string valor)
@@ -215,10 +227,10 @@ namespace CalculadoraIP
                         {
                             if (valor == MascaraCIDR[i, 0])
                             {
-                                Result[4] = MascaraCIDR[i, 3];
-                                Result[5] = valor;
-                                Result[6] = MascaraCIDR[i, 1];
-                                Result[7] = MascaraCIDR[i, 2];
+                                Result[4] = "Quantidade de hosts: " + MascaraCIDR[i, 3];
+                                Result[5] = "Máscara de rede: " +       valor;
+                                Result[6] = "CIDR: /" +                 MascaraCIDR[i, 1];
+                                Result[7] = "Quantidade de IPs: " +       MascaraCIDR[i, 2];
                                 erro = null;
                             }
                         }
@@ -240,19 +252,15 @@ namespace CalculadoraIP
                         {
                             if (valor == MascaraCIDR[i, 1])
                             {
-                                Result[4] = MascaraCIDR[i, 3];
-                                Result[5] = MascaraCIDR[i, 0];
-                                Result[6] = valor;
-                                Result[7] = MascaraCIDR[i, 2];
+                                Result[4] = "Quantidade de hosts: " +   MascaraCIDR[i, 3];
+                                Result[5] = "Máscara de rede: " +       MascaraCIDR[i, 0];
+                                Result[6] = "CIDR: /" +                 valor;
+                                Result[7] = "Quantidade de IPs: " + MascaraCIDR[i, 2];
                                 erro = null;
                             }
                         }
                     }
                 }
-                Console.WriteLine(Result[4]);
-                Console.WriteLine(Result[5]);
-                Console.WriteLine(Result[6]);
-                Console.WriteLine(Result[7]);
             }
             else
             {
@@ -272,18 +280,14 @@ namespace CalculadoraIP
                     {
                         if (valor == MascaraCIDR[i, 2])
                         {
-                            Result[4] = "Quantidade de hosts: " + MascaraCIDR[i, 2];
-                            Result[5] = "Máscara de rede: " + valor;
-                            Result[6] = "CIDR: /" + MascaraCIDR[i, 1];
-                            Result[7] = "Quantidade de IPs" + MascaraCIDR[i, 3];
+                            Result[4] = "Quantidade de hosts: " +   MascaraCIDR[i, 2];
+                            Result[5] = "Máscara de rede: " +       valor;
+                            Result[6] = "CIDR: /" +                 MascaraCIDR[i, 1];
+                            Result[7] = "Quantidade de IPs: " +       MascaraCIDR[i, 3];
                             erro = null;
                         }
                     }
                 }
-                Console.WriteLine(Result[4]);
-                Console.WriteLine(Result[5]);
-                Console.WriteLine(Result[6]);
-                Console.WriteLine(Result[7]);
             }
         }
 
@@ -324,5 +328,29 @@ namespace CalculadoraIP
 
 
         }
+
+        private static void calculaQuantidadeHosts(string valor)
+        {
+
+            if (erro == null)
+            {
+                erro = "QUANTIDADE DE HOSTS INVÁLDA!";
+                for (int i = 0; i <= 22; i++)
+                {
+                    for (int u = 0; u <= 3; u++)
+                    {
+                        if (valor == MascaraCIDR[i, 3])
+                        {
+                            Result[4] = "Quantidade de hosts: " +  valor;
+                            Result[5] = "Máscara de rede: " +      MascaraCIDR[i, 0];
+                            Result[6] = "CIDR: /" +                MascaraCIDR[i, 1];
+                            Result[7] = "Quantidade de IPs: " + MascaraCIDR[i, 2];
+                            erro = null;
+                        }
+                    }
+                }
+            }
+        }
+
     }
 }
