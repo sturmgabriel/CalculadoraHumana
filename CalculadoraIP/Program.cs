@@ -1,8 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+//Gabriel Sturm
+//Felipe Gervin
+//Árthur Passos
+//Fernando Viviurka
 
 namespace CalculadoraIP
 {
@@ -33,7 +38,7 @@ namespace CalculadoraIP
                                                     { "255.255.255.252", "30", "4", "2" ,"64"}};
 
         static string erro = null;
-        static string[] Result = new string[9];
+        static string[] Result = new string[10];
         //Result[0] = ip de rede
         //Result[1] = host inicial
         //Result[2] = HOST FINAL
@@ -54,7 +59,7 @@ namespace CalculadoraIP
             string v2;
             int op1;
             int op2;
-
+            
             while (true)
             {
                 erro = null;
@@ -92,9 +97,24 @@ namespace CalculadoraIP
 
                 distribuiCalculo(op1, op2, v1, v2);
 
+                Result[9] = "1º";
+
+                string[] ResultCompleto = new string[10];
+
+                ResultCompleto[0] = "\nIp de rede: "+Result[0];
+                ResultCompleto[1] = "host inicial: "+Result[1];
+                ResultCompleto[2] = "HOST FINAL: "+Result[2];
+                ResultCompleto[3] = "IP DE BROADCAST: "+Result[3];
+                ResultCompleto[4] = "QUANTIDADE DE HOSTS: "+Result[4];
+                ResultCompleto[5] = "MÁSCARA DE REDE: "+Result[5];
+                ResultCompleto[6] = "CIDR: /"+Result[6];
+                ResultCompleto[7] = "QUANTIDADE DE IPS: "+Result[7];
+                ResultCompleto[8] = "QUANTIDADE DE GRUPOS: "+Result[8];
+                ResultCompleto[9] = "QUAL GRUPO SE ENCONTRA: "+Result[9];
+
                 if (erro == null)
                 {
-                    foreach (var item in Result)
+                    foreach (var item in ResultCompleto)
                     {
                         Console.WriteLine(item);
                     }
@@ -182,6 +202,72 @@ namespace CalculadoraIP
                     calculaQuantidadeHosts(v2);
                 }
             }
+
+            if (!String.IsNullOrEmpty(Result[0]) && !String.IsNullOrEmpty(Result[7]))
+            {
+                CalculaBroadcast(Result[0], Result[7]);
+            }
+
+            if (!String.IsNullOrEmpty(Result[1]) && !String.IsNullOrEmpty(Result[4]))
+            {
+                CalculaHostFinal(Result[1], Result[4]);
+            }
+        }
+
+        private static void CalculaHostFinal(string v1, string v2)
+        {
+            int v2Int = Convert.ToInt32(v2);
+
+            string[] ip = v1.Split('.');
+            int oct1 = Convert.ToInt32(ip[0]);
+            int oct2 = Convert.ToInt32(ip[1]);
+            int oct3 = Convert.ToInt32(ip[2]);
+            int oct4 = Convert.ToInt32(ip[3]);
+
+
+            while (v2Int != 1)
+            {
+                if (oct4 < 255)
+                {
+                    oct4 = oct4 + 1;
+                }
+                else
+                {
+                    oct4 = 0;
+                    oct3 = oct3 + 1;
+                }
+                v2Int = v2Int - 1;
+            }
+
+            Result[2] = Convert.ToString(oct1) + '.' + Convert.ToString(oct2) + '.' + Convert.ToString(oct3) + '.' + Convert.ToString(oct4);
+        }
+
+        private static void CalculaBroadcast(string v1, string v2)
+        {
+            int v2Int = Convert.ToInt32(v2);
+
+            string[] ip = v1.Split('.');
+            int oct1 = Convert.ToInt32(ip[0]);
+            int oct2 = Convert.ToInt32(ip[1]);
+            int oct3 = Convert.ToInt32(ip[2]);
+            int oct4 = Convert.ToInt32(ip[3]);
+
+
+            while (v2Int != 1)
+            {
+                if (oct4 < 255)
+                {
+                    oct4 = oct4 + 1;
+                }
+                else
+                {
+                    oct4 = 0;
+                    oct3 = oct3 + 1;
+                }
+                v2Int = v2Int - 1;
+            }
+
+            Result[3] = Convert.ToString(oct1) + '.' + Convert.ToString(oct2) + '.' + Convert.ToString(oct3) + '.' + Convert.ToString(oct4);
         }
 
         private static void calculaMascara(string valor)
@@ -227,11 +313,11 @@ namespace CalculadoraIP
                         {
                             if (valor == MascaraCIDR[i, 0])
                             {
-                                Result[4] = "Quantidade de hosts: " + MascaraCIDR[i, 3];
-                                Result[5] = "Máscara de rede: " +       valor;
-                                Result[6] = "CIDR: /" +                 MascaraCIDR[i, 1];
-                                Result[7] = "Quantidade de IPs: " +       MascaraCIDR[i, 2];
-                                Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
+                                Result[4] = MascaraCIDR[i, 3];
+                                Result[5] = valor;
+                                Result[6] = MascaraCIDR[i, 1];
+                                Result[7] = MascaraCIDR[i, 2];
+                                Result[8] = MascaraCIDR[i, 4];
                                 erro = null;
                             }
                         }
@@ -254,11 +340,11 @@ namespace CalculadoraIP
                         {
                             if (valor == MascaraCIDR[i, 1])
                             {
-                                Result[4] = "Quantidade de hosts: " +   MascaraCIDR[i, 3];
-                                Result[5] = "Máscara de rede: " +       MascaraCIDR[i, 0];
-                                Result[6] = "CIDR: /" +                 valor;
-                                Result[7] = "Quantidade de IPs: " + MascaraCIDR[i, 2];
-                                Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
+                                Result[4] = MascaraCIDR[i, 3];
+                                Result[5] = MascaraCIDR[i, 0];
+                                Result[6] = valor;
+                                Result[7] = MascaraCIDR[i, 2];
+                                Result[8] = MascaraCIDR[i, 4];
                                 erro = null;
                             }
                         }
@@ -283,11 +369,11 @@ namespace CalculadoraIP
                     {
                         if (valor == MascaraCIDR[i, 2])
                         {
-                            Result[4] = "Quantidade de hosts: " +   MascaraCIDR[i, 2];
-                            Result[5] = "Máscara de rede: " +       valor;
-                            Result[6] = "CIDR: /" +                 MascaraCIDR[i, 1];
-                            Result[7] = "Quantidade de IPs: " +       MascaraCIDR[i, 3];
-                            Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
+                            Result[4] = MascaraCIDR[i, 2];
+                            Result[5] = valor;
+                            Result[6] = MascaraCIDR[i, 1];
+                            Result[7] = MascaraCIDR[i, 3];
+                            Result[8] = MascaraCIDR[i, 4];
                             erro = null;
                         }
                     }
@@ -319,13 +405,13 @@ namespace CalculadoraIP
 
                 if (erro == null)
                 {
-                    Result[0] = "IP de rede: " + valor;
+                    Result[0] = valor;
 
                     camposValor[3] = Convert.ToString(Convert.ToInt32(camposValor[3]) + 1);
 
                     string hostInicial = camposValor[0] + "." + camposValor[1] + "." + camposValor[2] + "." + camposValor[3];
 
-                    Result[1] = "Host Inicial: " + hostInicial;
+                    Result[1] = hostInicial;
                 }
 
             }
@@ -345,11 +431,11 @@ namespace CalculadoraIP
                     {
                         if (valor == MascaraCIDR[i, 3])
                         {
-                            Result[4] = "Quantidade de hosts: " +  valor;
-                            Result[5] = "Máscara de rede: " +      MascaraCIDR[i, 0];
-                            Result[6] = "CIDR: /" +                MascaraCIDR[i, 1];
-                            Result[7] = "Quantidade de IPs: " + MascaraCIDR[i, 2];
-                            Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
+                            Result[4] = valor;
+                            Result[5] = MascaraCIDR[i, 0];
+                            Result[6] = MascaraCIDR[i, 1];
+                            Result[7] = MascaraCIDR[i, 2];
+                            Result[8] = MascaraCIDR[i, 4];
 
                             erro = null;
                         }
