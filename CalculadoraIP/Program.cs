@@ -58,7 +58,7 @@ namespace CalculadoraIP
             while (true)
             {
                 erro = null;
-                Console.WriteLine("=-=-=-=Calculadora IP=-=-=-=");
+                Console.WriteLine("\n-=-=-=Calculadora IP=-=-=-=");
                 Console.WriteLine("0) SAIR");
                 Console.WriteLine("1) IP DE REDE");
                 Console.WriteLine("2) HOST INICIAL");
@@ -96,7 +96,7 @@ namespace CalculadoraIP
                 {
                     foreach (var item in Result)
                     {
-                        Console.WriteLine('\n' + item);
+                        Console.WriteLine(item);
                     }
                 }
                 else
@@ -231,6 +231,7 @@ namespace CalculadoraIP
                                 Result[5] = "Máscara de rede: " +       valor;
                                 Result[6] = "CIDR: /" +                 MascaraCIDR[i, 1];
                                 Result[7] = "Quantidade de IPs: " +       MascaraCIDR[i, 2];
+                                Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
                                 erro = null;
                             }
                         }
@@ -238,6 +239,7 @@ namespace CalculadoraIP
                 }
             }
         }
+
         private static void calculaCIDR(string valor)
         {
 
@@ -256,6 +258,7 @@ namespace CalculadoraIP
                                 Result[5] = "Máscara de rede: " +       MascaraCIDR[i, 0];
                                 Result[6] = "CIDR: /" +                 valor;
                                 Result[7] = "Quantidade de IPs: " + MascaraCIDR[i, 2];
+                                Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
                                 erro = null;
                             }
                         }
@@ -284,6 +287,7 @@ namespace CalculadoraIP
                             Result[5] = "Máscara de rede: " +       valor;
                             Result[6] = "CIDR: /" +                 MascaraCIDR[i, 1];
                             Result[7] = "Quantidade de IPs: " +       MascaraCIDR[i, 3];
+                            Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
                             erro = null;
                         }
                     }
@@ -345,6 +349,8 @@ namespace CalculadoraIP
                             Result[5] = "Máscara de rede: " +      MascaraCIDR[i, 0];
                             Result[6] = "CIDR: /" +                MascaraCIDR[i, 1];
                             Result[7] = "Quantidade de IPs: " + MascaraCIDR[i, 2];
+                            Result[8] = "Quantidade de Grupos: " + MascaraCIDR[i, 4];
+
                             erro = null;
                         }
                     }
